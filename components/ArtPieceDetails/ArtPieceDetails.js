@@ -1,12 +1,19 @@
 import Image from "next/image";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-export default function ArtPieceDetails({ image, title, artist, year, genre, isFavorite, slug, onToggleFavorite }) {
-
-  // console.log("artPiecesInfo: ", artPiecesInfo)
-  // const currentPieceSlug = data.find((piece) => piece.slug === slug).slug
-  // console.log("currentPiece: ", currentPieceSlug)
-  // const currentPieceIsFavorite = artPiecesInfo?.find((piece) => piece.slug === slug).isFavorite
-
+import CommentForm from "../CommentForm/CommentForm";
+import Comments from "../Comments/Comments";
+export default function ArtPieceDetails({
+  image,
+  title,
+  artist,
+  year,
+  genre,
+  isFavorite,
+  slug,
+  comments,
+  onToggleFavorite,
+  onSubmitComment,
+}) {
   return (
     <div>
       <p>{title}</p>
@@ -15,9 +22,22 @@ export default function ArtPieceDetails({ image, title, artist, year, genre, isF
       <p>{genre}</p>
 
       <Image src={image} alt={genre} width="500" height="500" />
-      <FavoriteButton onToggleFavorite={() => onToggleFavorite(slug)}
-        isFavorite={isFavorite}>
-      </FavoriteButton>
+      <FavoriteButton
+        onToggleFavorite={() => onToggleFavorite(slug)}
+        isFavorite={isFavorite}
+      ></FavoriteButton>
+      <CommentForm onSubmit={onSubmitComment}></CommentForm>
+
+      {comments.map((comment, index) => {
+        return (
+          <Comments
+            key={index}
+            date={comment.date}
+            time={comment.time}
+            comment={comment.userComment}
+          ></Comments>
+        );
+      })}
     </div>
   );
 }
