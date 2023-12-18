@@ -10,8 +10,11 @@ export default function Details({ artPiecesInfo, onToggleFavorite }) {
   const currentPiece = artPiecesInfo?.find(
     (piece) => piece.slug === slugRouter
   );
-  console.log(currentPiece);
-  const { imageSource, name, year, artist, genre, isFavorite, slug } =
+  if (!currentPiece) {
+    return <div>Loading...</div>; // or any other loading state representation
+  }
+  console.log("currenzPiece", currentPiece);
+  const { imageSource, name, year, artist, genre, isFavorite, slug, comments } =
     currentPiece;
 
   return (
@@ -26,6 +29,7 @@ export default function Details({ artPiecesInfo, onToggleFavorite }) {
         year={year}
         isFavorite={isFavorite}
         onToggleFavorite={onToggleFavorite}
+        comments={comments}
       />
 
       <Link href={`/art-pieces/`}>

@@ -34,7 +34,11 @@ export default function App({ Component, pageProps }) {
 
       setArtPiecesInfo(
         data.map((piece) => {
-          return { ...piece, isFavorite: false };
+          return {
+            ...piece,
+            isFavorite: false,
+            comments: [{ date: "", time: "", userComment: "" }],
+          };
         })
       );
     }
@@ -50,6 +54,23 @@ export default function App({ Component, pageProps }) {
       })
     );
   }
+
+  function onSubmitComment(event) {
+    event.preventDefault();
+    const date = event.target;
+    const time = event.target;
+    const comment = event.target.inputComment.value;
+    console.log("comment", comment);
+    // setArtPiecesInfo((artPiecesInfoPrev) =>
+    //   artPiecesInfoPrev.map((piece) => {
+    //     if (piece.slug === slug) {
+    //       return { ...piece, comments:[...] };
+    //     }
+    //     return piece;
+    //   })
+    // );
+  }
+
   function randomPiece() {
     return Math.floor(Math.random() * 11);
   }
@@ -57,8 +78,7 @@ export default function App({ Component, pageProps }) {
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 
-  console.log("artPiecesInfo on App page: ", artPiecesInfo)
-
+  console.log("artPiecesInfo on App page: ", artPiecesInfo);
 
   return (
     <>
@@ -69,6 +89,7 @@ export default function App({ Component, pageProps }) {
         index={index}
         onToggleFavorite={onToggleFavorite}
         artPiecesInfo={artPiecesInfo}
+        onSubmitComment={onSubmitComment}
       />
       <Layout />
     </>
