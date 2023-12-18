@@ -3,11 +3,15 @@ import ArtPieces from "@/components/ArtPieces/ArtPieces";
 import { useEffect, useState } from "react";
 import Spotlight from "@/components/Spotlight/Spotlight";
 
-export default function SpotlightPage({ data, index }) {
+export default function SpotlightPage({ data, index, artPiecesInfo, onToggleFavorite }) {
+
+  console.log("artPiecesInfo: ", artPiecesInfo)
+  console.log("data: ", data)
+
 
   return (
     <div>
-      <Spotlight image={data[index].imageSource} artist={data[index].artist} />
+      <Spotlight image={data[index].imageSource} artist={data[index].artist} slug={data[index].slug} data={data} artPiecesInfo={artPiecesInfo} onToggleFavorite={onToggleFavorite}/>
     </div>
   );
 }
