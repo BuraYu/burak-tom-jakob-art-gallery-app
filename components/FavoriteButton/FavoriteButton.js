@@ -1,11 +1,11 @@
 import Image from "next/image";
-export default function FavoriteButton({ favorite, onToggleFavorite }) {
+export default function FavoriteButton({ isFavorite, onToggleFavorite }) {
 
     // const {isFavorite} = favorite
   return (
     <Image
     onClick={()=> onToggleFavorite()}
-      src={favorite.isFavorite ? "/heart.svg" : "/favicon.ico"}
+      src={isFavorite ? "/heart.svg" : "/favicon.ico"}
       alt="favourite button"
       width="50"
       height="50"

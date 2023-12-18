@@ -1,11 +1,12 @@
 import ArtPieceDetails from "@/components/ArtPieceDetails/ArtPieceDetails";
 import { useRouter } from "next/router";
 import Link from "next/link";
-export default function Details({ data }) {
+
+export default function Details({ artPiecesInfo }) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const currentPiece = data.find((piece) => piece.slug === slug);
+  const currentPiece = artPiecesInfo.find((piece) => piece.slug === slug);
   const { imageSource, name, year, artist, genre } = currentPiece;
 
   return (

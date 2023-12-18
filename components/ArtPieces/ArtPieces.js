@@ -1,11 +1,11 @@
 import ArtPiecePreview from "../ArtPiecePreview/ArtPiecePreview";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-export default function ArtPieces({ pieces, onToggleFavorite, isFavorite }) {
+export default function ArtPieces({ artPiecesInfo, onToggleFavorite }) {
   return (
     <ul>
-      {Array.isArray(pieces) &&
-        pieces.map((piece) => {
+      {Array.isArray(artPiecesInfo) &&
+        artPiecesInfo.map((piece) => {
           return (
             <li key={piece.slug}>
               <Link href={`/art-pieces/${piece.slug}`}>
@@ -18,7 +18,7 @@ export default function ArtPieces({ pieces, onToggleFavorite, isFavorite }) {
               </Link>
               <FavoriteButton
                 onToggleFavorite={() => onToggleFavorite(piece.slug)}
-                favorite={isFavorite}
+                isFavorite={piece.isFavorite}
               ></FavoriteButton>
             </li>
           );

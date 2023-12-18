@@ -2,14 +2,12 @@ import Spotlight from "@/components/Spotlight/Spotlight";
 import ArtPieces from "@/components/ArtPieces/ArtPieces";
 import { useRouter } from "next/router";
 
-export default function ArtPiecesPage({ data, handleClick }) {
+export default function ArtPiecesPage({ artPiecesInfo, onToggleFavorite }) {
   const router = useRouter();
-
-  // console.log(data);
 
   return (
     <>
-      <ArtPieces pieces={data} handleClick={handleClick}/>
+      <ArtPieces artPiecesInfo={artPiecesInfo} onToggleFavorite={onToggleFavorite}/>
     </>
   );
 }
