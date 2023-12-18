@@ -5,14 +5,18 @@ import Link from "next/link";
 export default function Details({ artPiecesInfo, onToggleFavorite }) {
   const router = useRouter();
   // const { slug } = router.query;
-  const slugRouter = router.query.slug
+  const slugRouter = router.query.slug;
 
-  const currentPiece = artPiecesInfo?.find((piece) => piece.slug === slugRouter);
-  console.log(currentPiece)
-  const { imageSource, name, year, artist, genre, isFavorite, slug } = currentPiece;
+  const currentPiece = artPiecesInfo?.find(
+    (piece) => piece.slug === slugRouter
+  );
+  console.log(currentPiece);
+  const { imageSource, name, year, artist, genre, isFavorite, slug } =
+    currentPiece;
 
   return (
     <>
+      <h1>Details</h1>
       <ArtPieceDetails
         slug={slug}
         image={imageSource}
