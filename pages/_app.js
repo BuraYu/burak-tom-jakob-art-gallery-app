@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/Layout";
 import { uid } from "uid";
 import useLocalStorageState from "use-local-storage-state";
+import "./style.css";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
