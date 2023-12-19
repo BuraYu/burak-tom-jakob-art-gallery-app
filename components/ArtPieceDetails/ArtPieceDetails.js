@@ -2,6 +2,8 @@ import Image from "next/image";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import CommentForm from "../CommentForm/CommentForm";
 import Comments from "../Comments/Comments";
+import BackgroundRender from "../BackgroundRender/BackgroundRender";
+
 export default function ArtPieceDetails({
   image,
   title,
@@ -13,6 +15,7 @@ export default function ArtPieceDetails({
   comments,
   onToggleFavorite,
   onSubmitComment,
+  colors,
 }) {
   return (
     <div>
@@ -20,6 +23,7 @@ export default function ArtPieceDetails({
       <p>{artist}</p>
       <p>{year}</p>
       <p>{genre}</p>
+      <BackgroundRender colors={colors}></BackgroundRender>
 
       <Image src={image} alt={genre} width="500" height="500" />
       <FavoriteButton

@@ -17,9 +17,18 @@ export default function Details({
   if (!currentPiece) {
     return <div>Loading...</div>; // or any other loading state representation
   }
-  const { imageSource, name, year, artist, genre, isFavorite, slug, comments } =
-    currentPiece;
-
+  const {
+    imageSource,
+    name,
+    year,
+    artist,
+    genre,
+    isFavorite,
+    slug,
+    comments,
+    colors,
+  } = currentPiece;
+  console.log(colors);
   return (
     <>
       <h1>Details</h1>
@@ -34,6 +43,7 @@ export default function Details({
         onToggleFavorite={onToggleFavorite}
         comments={comments}
         onSubmitComment={onSubmitComment}
+        colors={colors}
       />
 
       <Link href={`/art-pieces/`}>
