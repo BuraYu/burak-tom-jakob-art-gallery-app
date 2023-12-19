@@ -1,13 +1,19 @@
 import Image from "next/image";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
-export default function Spotlight({ slug, image, artist, onToggleFavorite, data, artPiecesInfo }) {
+export default function Spotlight({
+  slug,
+  image,
+  artist,
+  onToggleFavorite,
+  data,
+  artPiecesInfo,
+}) {
+  const currentPieceSlug = data.find((piece) => piece.slug === slug).slug;
 
-  console.log("artPiecesInfo: ", artPiecesInfo)
-  const currentPieceSlug = data.find((piece) => piece.slug === slug).slug
-  console.log("currentPiece: ", currentPieceSlug)
-  
-  const currentPieceIsFavorite = artPiecesInfo?.find((piece) => piece.slug === slug).isFavorite
+  const currentPieceIsFavorite = artPiecesInfo?.find(
+    (piece) => piece.slug === slug
+  ).isFavorite;
 
   return (
     <div>

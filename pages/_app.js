@@ -20,8 +20,6 @@ export default function App({ Component, pageProps }) {
   const [index, setIndex] = useState(0);
   const [artPiecesInfo, setArtPiecesInfo] = useState();
 
-  console.log("after setter: ", artPiecesInfo);
-
   const { data, error, isLoading } = useSWR(
     "https://example-apis.vercel.app/api/art",
     fetcher
@@ -30,7 +28,6 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     if (data && data.length > 0) {
       setIndex(randomPiece());
-      // console.log(data)
 
       setArtPiecesInfo(
         data.map((piece) => {
@@ -55,20 +52,42 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  function onSubmitComment(event) {
+  useEffect(() => {
+    console.log("artPiecesInfo updated:", artPiecesInfo);
+  }, [artPiecesInfo]); // This effect will run whenever artPiecesInfo changes
+
+  function onSubmitComment(event, index) {
     event.preventDefault();
-    const date = event.target;
-    const time = event.target;
-    const comment = event.target.inputComment.value;
-    console.log("comment", comment);
-    // setArtPiecesInfo((artPiecesInfoPrev) =>
-    //   artPiecesInfoPrev.map((piece) => {
-    //     if (piece.slug === slug) {
-    //       return { ...piece, comments:[...] };
-    //     }
-    //     return piece;
-    //   })
-    // );
+    const comment = event.target.elements.inputComment.value;
+
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+
+    const hours = currentDate.getHours().toString().padStart(2, "0");
+    const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+
+    const formattedTime = `${hours}:${minutes}`;
+
+    setArtPiecesInfo((artPiecesInfoPrev) =>
+      artPiecesInfoPrev.map((piece, i) => {
+        if (i === index) {
+          const updatedComments = [
+            ...piece.comments,
+            { date: formattedDate, time: formattedTime, userComment: comment },
+          ];
+
+          const updatedPiece = { ...piece, comments: updatedComments };
+
+          console.log("Updated piece:", updatedPiece);
+
+          return updatedPiece;
+        }
+        return piece;
+      })
+    );
   }
 
   function randomPiece() {
@@ -77,8 +96,6 @@ export default function App({ Component, pageProps }) {
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
-
-  console.log("artPiecesInfo on App page: ", artPiecesInfo);
 
   return (
     <>

@@ -2,9 +2,12 @@ import ArtPieceDetails from "@/components/ArtPieceDetails/ArtPieceDetails";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function Details({ artPiecesInfo, onToggleFavorite }) {
+export default function Details({
+  artPiecesInfo,
+  onToggleFavorite,
+  onSubmitComment,
+}) {
   const router = useRouter();
-  // const { slug } = router.query;
   const slugRouter = router.query.slug;
 
   const currentPiece = artPiecesInfo?.find(
@@ -13,7 +16,6 @@ export default function Details({ artPiecesInfo, onToggleFavorite }) {
   if (!currentPiece) {
     return <div>Loading...</div>; // or any other loading state representation
   }
-  console.log("currenzPiece", currentPiece);
   const { imageSource, name, year, artist, genre, isFavorite, slug, comments } =
     currentPiece;
 
@@ -30,6 +32,7 @@ export default function Details({ artPiecesInfo, onToggleFavorite }) {
         isFavorite={isFavorite}
         onToggleFavorite={onToggleFavorite}
         comments={comments}
+        onSubmitComment={onSubmitComment}
       />
 
       <Link href={`/art-pieces/`}>
