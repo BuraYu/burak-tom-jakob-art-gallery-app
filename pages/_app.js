@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/Layout";
 import { uid } from "uid";
+import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -19,9 +20,9 @@ const fetcher = async (url) => {
 
 export default function App({ Component, pageProps }) {
   const [index, setIndex] = useState(0);
-  const [artPiecesInfo, setArtPiecesInfo] = useState();
-
-  console.log("after setter: ", artPiecesInfo);
+  const [artPiecesInfo, setArtPiecesInfo] = useLocalStorageState("keyGallery", {
+    defaultValue: [],
+  });
 
   const { data, error, isLoading } = useSWR(
     "https://example-apis.vercel.app/api/art",
@@ -29,21 +30,29 @@ export default function App({ Component, pageProps }) {
   );
 
   useEffect(() => {
-    if (data && data.length > 0) {
+    const localArtPiecesInfo = JSON.parse(localStorage.getItem("keyGallery"));
+    console.log("jakob", localArtPiecesInfo);
+    if (localArtPiecesInfo && localArtPiecesInfo.length > 0) {
+      setArtPiecesInfo(localArtPiecesInfo);
       setIndex(randomPiece());
-      // console.log(data)
+    } else if (data && data.length > 0) {
+      setIndex(randomPiece());
 
       setArtPiecesInfo(
-        data.map((piece) => {
-          return {
-            ...piece,
-            isFavorite: false,
-            comments: [{ date: "", time: "", userComment: "" }],
-          };
-        })
+        data.map((piece) => ({
+          ...piece,
+          isFavorite: false,
+          comments: [],
+        }))
       );
     }
-  }, [data]);
+  }, [artPiecesInfo, data]);
+
+  // const [items, setItems] = useState([]);
+
+  // useEffect(() => {
+  //   localStorage.setItem("keyGallery", JSON.stringify(artPiecesInfo));
+  // }, [artPiecesInfo]);
 
   function onToggleFavorite(slug) {
     setArtPiecesInfo((artPiecesInfoPrev) =>
@@ -68,12 +77,6 @@ export default function App({ Component, pageProps }) {
     const minutes = currentDate.getMinutes().toString().padStart(2, "0");
     const formattedTime = `${hours}:${minutes}`;
     const comment = event.target.inputComment.value;
-    console.log(
-      "comment, date and time",
-      comment,
-      formattedTime,
-      formattedDate
-    );
 
     setArtPiecesInfo((artPiecesInfoPrev) =>
       artPiecesInfoPrev.map((piece) => {
@@ -102,8 +105,6 @@ export default function App({ Component, pageProps }) {
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
-
-  console.log("artPiecesInfo on App page: ", artPiecesInfo);
 
   return (
     <>

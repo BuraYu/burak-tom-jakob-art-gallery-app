@@ -9,9 +9,6 @@ export default function SpotlightPage({
   artPiecesInfo,
   onToggleFavorite,
 }) {
-  console.log("artPiecesInfo: ", artPiecesInfo);
-  console.log("data: ", data);
-
   return (
     <div>
       <h1>Spotlight</h1>
