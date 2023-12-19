@@ -4,7 +4,7 @@ export default function FavoriteButton({ isFavorite, onToggleFavorite }) {
   return (
     <Image
       onClick={() => onToggleFavorite()}
-      src={isFavorite ? "/heart.svg" : "/favicon.png"}
+      src={isFavorite ? "/heart.svg" : "/heart.png"}
       alt="favourite button"
       width="50"
       height="50"
