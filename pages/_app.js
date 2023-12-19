@@ -2,6 +2,7 @@ import GlobalStyle from "../styles";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/Layout";
+import { uid } from "uid";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -55,7 +56,7 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  function onSubmitComment(event) {
+  function onSubmitComment(event, slug) {
     event.preventDefault();
 
     const currentDate = new Date();
@@ -74,14 +75,25 @@ export default function App({ Component, pageProps }) {
       formattedDate
     );
 
-    // setArtPiecesInfo((artPiecesInfoPrev) =>
-    //   artPiecesInfoPrev.map((piece) => {
-    //     if (piece.slug === slug) {
-    //       return { ...piece, comments:[...] };
-    //     }
-    //     return piece;
-    //   })
-    // );
+    setArtPiecesInfo((artPiecesInfoPrev) =>
+      artPiecesInfoPrev.map((piece) => {
+        if (piece.slug === slug) {
+          return {
+            ...piece,
+            comments: [
+              ...piece.comments,
+              {
+                id: uid(),
+                date: formattedDate,
+                time: formattedTime,
+                userComment: comment,
+              },
+            ],
+          };
+        }
+        return piece;
+      })
+    );
   }
 
   function randomPiece() {
