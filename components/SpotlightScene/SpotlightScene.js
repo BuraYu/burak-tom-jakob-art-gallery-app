@@ -4,12 +4,34 @@ import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
 
-export default function SpotlightScene({image, dimensions, artist, colors}) {
+export default function SpotlightScene({image, dimensions, artist, colors, title}) {
   const containerRef = useRef(null);
 
   console.log(image)
 
+  let sceneInitialzed;
+
+
+
+
   useEffect(() => {
+    if (!containerRef.current || sceneInitialzed) return;
+
+    const createTextTexture = (text, fontSize, textColor, backgroundColor) => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = 512;
+        canvas.height = 256;
+        context.font = `${fontSize}px Arial`;
+        context.fillStyle = backgroundColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = textColor;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(text, canvas.width / 2, canvas.height / 2);
+        return new THREE.CanvasTexture(canvas);
+      };
+
     if (typeof window !== "undefined") {
       // Initialize Three.js scene here
       // For example, you can use the following code to create a simple scene:
@@ -117,22 +139,55 @@ export default function SpotlightScene({image, dimensions, artist, colors}) {
 
       scene.add(ceilingPlane);
 
-      // const loader = new FontLoader();
-      // loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+    //   let textGeometry;
 
-      // const geometry = new TextGeometry( artist, {
-      //     font: font,
-      //     size: 80,
-      //     height: 5,
-      //     curveSegments: 12,
-      //     bevelEnabled: true,
-      //     bevelThickness: 10,
-      //     bevelSize: 8,
-      //     bevelOffset: 0,
-      //     bevelSegments: 5
-      //   } );
-      // } );
-      // scene.add(geometry)
+    //   const loader = new FontLoader();
+    //   loader.load( 'helvetiker_regular.typeface.json', function ( font ) {
+    //     console.log("font loaded successsfllly");
+    //     try {
+    //         let textGeometry = new TextGeometry( "hello", {
+    //           font: font,
+    //           size: 100,
+    //           height: 10,
+    //           curveSegments: 12,
+    //           bevelEnabled: true,
+    //           bevelThickness: 10,
+    //           bevelSize: 8,
+    //           bevelOffset: 0,
+    //           bevelSegments: 5
+    //         } );
+            
+    //         const textMaterial = new THREE.MeshBasicMaterial({color: "black"})
+    //         const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      
+    //         textMesh.position.set(0, 0, 5)
+    //         scene.add(textMesh)
+    //     } catch (error) {
+    //         console.log("error: ", error)
+    //     }
+
+  
+    // } );
+    const textureText = createTextTexture('Spotlight', 130, 'white', 'transparent');
+    const materialText = new THREE.MeshBasicMaterial({ map: textureText, transparent: true });
+    const meshText = new THREE.Mesh(new THREE.PlaneGeometry(10, 5), materialText);
+
+    meshText.position.set(0,0,6)
+
+    scene.add(meshText);
+
+
+    const textureTextInfo = createTextTexture(`${artist}`, 45, 'black', 'white');
+    const materialTextInfo = new THREE.MeshBasicMaterial({ map: textureTextInfo });
+    const meshTextInfo = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), materialTextInfo);
+
+    meshTextInfo.position.set(5,0,-9.99)
+
+    scene.add(meshTextInfo);
+    
+    
+      
+
 
       function createPainting(imageUrl, width, height, position) {
         const texture = new THREE.TextureLoader();
@@ -167,10 +222,10 @@ export default function SpotlightScene({image, dimensions, artist, colors}) {
           camera.translateX(0.1);
         }
         if (keycode === 38) {
-          camera.translateZ(-0.1);
+          camera.translateZ(-0.2);
         }
         if (keycode === 40) {
-          camera.translateZ(0.1);
+          camera.translateZ(0.2);
         }
       }
 
@@ -184,6 +239,11 @@ export default function SpotlightScene({image, dimensions, artist, colors}) {
     }
 
       renderLoop();
+      sceneInitialzed = true;
+
+      return () => {
+        sceneInitialzed = false
+      }
       // Render the scene and camera
     }
   }, []);

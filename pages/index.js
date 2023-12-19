@@ -5,14 +5,13 @@ import Spotlight from "@/components/Spotlight/Spotlight";
 import SpotlightScene from "@/components/SpotlightScene/SpotlightScene";
 
 export default function SpotlightPage({
-  data,
   index,
   artPiecesInfo,
   onToggleFavorite,
 }) {
   return (
     <div>
-      <SpotlightScene image={data[index].imageSource} dimensions={data[index].dimensions} artist={data[index].artist} colors={data[index].colors}/>
+      <SpotlightScene image={artPiecesInfo[index].imageSource} dimensions={artPiecesInfo[index].dimensions} artist={artPiecesInfo[index].artist} colors={artPiecesInfo[index].colors} title={artPiecesInfo[index].name}/>
       {/* <h1>Spotlight</h1>
       <Spotlight
         image={data[index].imageSource}

@@ -46,7 +46,7 @@ export default function App({ Component, pageProps }) {
         }))
       );
     }
-  }, [artPiecesInfo, data]);
+  }, [artPiecesInfo]);
 
   // const [items, setItems] = useState([]);
 
