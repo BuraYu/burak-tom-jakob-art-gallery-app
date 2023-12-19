@@ -2,6 +2,7 @@ import { preload } from "swr";
 import ArtPieces from "@/components/ArtPieces/ArtPieces";
 import { useEffect, useState } from "react";
 import Spotlight from "@/components/Spotlight/Spotlight";
+import SpotlightScene from "@/components/SpotlightScene/SpotlightScene";
 
 export default function SpotlightPage({
   data,
@@ -11,7 +12,8 @@ export default function SpotlightPage({
 }) {
   return (
     <div>
-      <h1>Spotlight</h1>
+      <SpotlightScene image={data[index].imageSource} dimensions={data[index].dimensions} artist={data[index].artist} colors={data[index].colors}/>
+      {/* <h1>Spotlight</h1>
       <Spotlight
         image={data[index].imageSource}
         artist={data[index].artist}
@@ -19,7 +21,7 @@ export default function SpotlightPage({
         data={data}
         artPiecesInfo={artPiecesInfo}
         onToggleFavorite={onToggleFavorite}
-      />
+      /> */}
     </div>
   );
 }
