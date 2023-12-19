@@ -47,7 +47,16 @@ export default function Details({
       />
 
       <Link href={`/art-pieces/`}>
-        <button>Back</button>
+        <button
+          style={{
+            backgroundColor: "#e7e7e7",
+            color: "black",
+            border: "none",
+            fontSize: "25px",
+          }}
+        >
+          Back
+        </button>
       </Link>
     </>
   );

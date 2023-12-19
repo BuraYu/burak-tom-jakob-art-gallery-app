@@ -18,11 +18,23 @@ export default function ArtPieceDetails({
   colors,
 }) {
   return (
-    <div>
-      <p>{title}</p>
-      <p>{artist}</p>
-      <p>{year}</p>
-      <p>{genre}</p>
+    <div className="details-container">
+      <p
+        style={{
+          fontSize: "18px",
+        }}
+      >
+        {title}
+      </p>
+      <p
+        style={{
+          fontSize: "20px",
+        }}
+      >
+        {artist}
+      </p>
+      <p className="year">{year}</p>
+      <p className="genre">{genre}</p>
       <BackgroundRender colors={colors}></BackgroundRender>
 
       <Image src={image} alt={genre} width="500" height="500" />
