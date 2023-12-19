@@ -57,10 +57,23 @@ export default function App({ Component, pageProps }) {
 
   function onSubmitComment(event) {
     event.preventDefault();
-    const date = event.target;
-    const time = event.target;
+
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    const hours = currentDate.getHours().toString().padStart(2, "0");
+    const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+    const formattedTime = `${hours}:${minutes}`;
     const comment = event.target.inputComment.value;
-    console.log("comment", comment);
+    console.log(
+      "comment, date and time",
+      comment,
+      formattedTime,
+      formattedDate
+    );
+
     // setArtPiecesInfo((artPiecesInfoPrev) =>
     //   artPiecesInfoPrev.map((piece) => {
     //     if (piece.slug === slug) {
