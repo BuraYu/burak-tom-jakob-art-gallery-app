@@ -2,6 +2,7 @@ import GlobalStyle from "../styles";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout/Layout";
+import { uid } from "uid";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -77,12 +78,18 @@ export default function App({ Component, pageProps }) {
     setArtPiecesInfo((artPiecesInfoPrev) =>
       artPiecesInfoPrev.map((piece) => {
         if (piece.slug === slug) {
-          return { ...piece, comments:[{
-            date: formattedDate,
-            time: formattedTime,
-            userComment: comment,
-          }]
-           };
+          return {
+            ...piece,
+            comments: [
+              ...piece.comments,
+              {
+                id: uid(),
+                date: formattedDate,
+                time: formattedTime,
+                userComment: comment,
+              },
+            ],
+          };
         }
         return piece;
       })
