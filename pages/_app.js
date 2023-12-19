@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  function onSubmitComment(event) {
+  function onSubmitComment(event, slug) {
     event.preventDefault();
 
     const currentDate = new Date();
@@ -74,14 +74,19 @@ export default function App({ Component, pageProps }) {
       formattedDate
     );
 
-    // setArtPiecesInfo((artPiecesInfoPrev) =>
-    //   artPiecesInfoPrev.map((piece) => {
-    //     if (piece.slug === slug) {
-    //       return { ...piece, comments:[...] };
-    //     }
-    //     return piece;
-    //   })
-    // );
+    setArtPiecesInfo((artPiecesInfoPrev) =>
+      artPiecesInfoPrev.map((piece) => {
+        if (piece.slug === slug) {
+          return { ...piece, comments:[{
+            date: formattedDate,
+            time: formattedTime,
+            userComment: comment,
+          }]
+           };
+        }
+        return piece;
+      })
+    );
   }
 
   function randomPiece() {

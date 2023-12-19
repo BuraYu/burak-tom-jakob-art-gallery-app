@@ -14,7 +14,7 @@ export default function ArtPieceDetails({
   onToggleFavorite,
   onSubmitComment,
 }) {
-  console.log("onsubmitcom", onSubmitComment);
+  console.log("onsubmitcom", onSubmitComment, comments);
   return (
     <div>
       <p>{title}</p>
@@ -27,7 +27,7 @@ export default function ArtPieceDetails({
         onToggleFavorite={() => onToggleFavorite(slug)}
         isFavorite={isFavorite}
       ></FavoriteButton>
-      <CommentForm onSubmit={onSubmitComment}></CommentForm>
+      <CommentForm slug={slug} onSubmit={onSubmitComment}></CommentForm>
 
       {comments.map((comment, index) => {
         return (
