@@ -17,7 +17,6 @@ export default function Details({
   if (!currentPiece) {
     return <div>Loading...</div>; // or any other loading state representation
   }
-  console.log("currenzPiece", currentPiece);
   const { imageSource, name, year, artist, genre, isFavorite, slug, comments } =
     currentPiece;
 

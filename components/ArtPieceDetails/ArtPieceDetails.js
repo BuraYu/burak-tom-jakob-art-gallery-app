@@ -14,7 +14,6 @@ export default function ArtPieceDetails({
   onToggleFavorite,
   onSubmitComment,
 }) {
-  console.log("onsubmitcom", onSubmitComment, comments);
   return (
     <div>
       <p>{title}</p>
